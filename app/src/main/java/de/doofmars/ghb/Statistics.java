@@ -2,21 +2,43 @@ package de.doofmars.ghb;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.PointF;
+import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.Highlight;
+import com.github.mikephil.charting.utils.ValueFormatter;
+
+import java.util.ArrayList;
+
+import de.doofmars.ghb.fragments.BarChartFragment;
 
 
 public class Statistics extends ActionBarActivity {
 
     private final static String TRAFFIC_CALL = "https://ghb.hs-furtwangen.de/api/call?method=t&key=";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +46,11 @@ public class Statistics extends ActionBarActivity {
         setContentView(R.layout.activity_statistics);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, new BarChartFragment())
                     .commit();
         }
+
+
     }
 
     @Override
@@ -61,21 +85,5 @@ public class Statistics extends ActionBarActivity {
     public void onBackgroundTaskCompleted(String result) {
         TextView output = (TextView) findViewById(R.id.tv_output);
         output.setText(result);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_statistics, container, false);
-            return rootView;
-        }
     }
 }
