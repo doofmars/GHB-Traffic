@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory
+        android:key="api_group"
+        android:title="@string/settings_api_group" >
+
+        <EditTextPreference
+            android:title="@string/settings_api_key"
+            android:summary="@string/settings_api_key_summary"
+            android:inputType="textNoSuggestions"
+            android:key="api_key" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/settings_about_group"
+        android:key="about">
+        <PreferenceScreen
+            android:title="@string/settings_about" >
+            <Preference
+                android:summary="@string/settings_about_summary"
+                android:title="@string/app_name" />
+        </PreferenceScreen>
+
+
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
