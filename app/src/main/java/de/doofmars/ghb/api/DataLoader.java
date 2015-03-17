@@ -30,11 +30,12 @@ import java.io.InputStreamReader;
 import java.security.KeyStore;
 
 import de.doofmars.ghb.Statistics;
+import de.doofmars.ghb.model.TrafficReport;
 
 /**
  * Created by Jan on 14.03.2015.
  */
-public class DataLoader extends AsyncTask<String, Void, String> {
+public class DataLoader extends AsyncTask<String, Void, TrafficReport> {
     Statistics caller;
 
     public DataLoader(Statistics caller) {
@@ -65,7 +66,7 @@ public class DataLoader extends AsyncTask<String, Void, String> {
         }
     }
 
-    protected String doInBackground(String... urls) {
+    protected TrafficReport doInBackground(String... urls) {
         Log.i("DataLoader", "Load data from " + urls[0]);
         StringBuilder builder = new StringBuilder();
         HttpClient client = getNewHttpClient();
@@ -85,9 +86,9 @@ public class DataLoader extends AsyncTask<String, Void, String> {
                     builder.append(line);
                 }
                 GHBTrafficApiParser ghbTrafficApiParser = new GHBTrafficApiParser(builder.toString());
-                return builder.toString();
+                return ghbTrafficApiParser.getReport();
             } else {
-                return "Failed to access data";
+                return new TrafficReport();
             }
         } catch (ClientProtocolException e) {
             Log.e("Getter", "ClientProtocolException", e);
@@ -96,12 +97,12 @@ public class DataLoader extends AsyncTask<String, Void, String> {
         } catch (XmlPullParserException e) {
             Log.e("Getter", "XmlPullParserException", e);
         }
-        return "An exception occurred";
+        return new TrafficReport();
 
     }
 
     @Override
-    protected void onPostExecute(String result) {
-        caller.onBackgroundTaskCompleted(result);
+    protected void onPostExecute(TrafficReport report) {
+        caller.onBackgroundTaskCompleted(report);
     }
 }

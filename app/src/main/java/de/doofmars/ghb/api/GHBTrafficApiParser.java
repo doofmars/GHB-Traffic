@@ -13,13 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.doofmars.ghb.model.Day;
+import de.doofmars.ghb.model.TrafficReport;
 
 /**
  * Created by Jan on 14.03.2015.
  */
 public class GHBTrafficApiParser {
     private StringReader input;
-    private List<Day> days = new ArrayList<>();
+    TrafficReport report = new TrafficReport();
     public final static String XML_TAG = "day";
     public final static String XML_TOTAL = "total";
     public final static String XML_HOST_ID = "host_id";
@@ -45,11 +46,11 @@ public class GHBTrafficApiParser {
                             parser.getAttributeValue(null, XML_YEAR),
                             parser.getAttributeValue(null, XML_DATE));
                     Log.i("XML-Parser", currentDay.toString());
-                    days.add(currentDay);
+                    report.addDay(currentDay);
                 }
                 eventType = parser.next();
             }
-            parser.setInput(input);
+            Log.i("XML-Parser", report.toString());
         } catch (XmlPullParserException e) {
             Log.e("XML-Parser", "XmlPullParserException", e);
         } catch (IOException e) {
@@ -59,6 +60,10 @@ public class GHBTrafficApiParser {
 
     public GHBTrafficApiParser(String xml) throws XmlPullParserException {
         this(xml, XmlPullParserFactory.newInstance().newPullParser());
+    }
+
+    public TrafficReport getReport() {
+        return report;
     }
 
     @Override

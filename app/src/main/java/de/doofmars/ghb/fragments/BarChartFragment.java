@@ -23,9 +23,11 @@ import com.github.mikephil.charting.utils.Highlight;
 import com.github.mikephil.charting.utils.ValueFormatter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.doofmars.ghb.MyValueFormatter;
 import de.doofmars.ghb.R;
+import de.doofmars.ghb.model.TrafficReport;
 
 /**
  * Created by Jan on 16.03.2015.
@@ -33,9 +35,6 @@ import de.doofmars.ghb.R;
 public class BarChartFragment extends Fragment implements OnChartValueSelectedListener {
 
     protected BarChart mChart;
-    protected String[] mMonths = new String[] {
-            "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"
-    };
 //    private Typeface mTf;
 
     @Override
@@ -88,7 +87,9 @@ public class BarChartFragment extends Fragment implements OnChartValueSelectedLi
         rightAxis.setLabelCount(8);
         rightAxis.setValueFormatter(custom);
 
-        setData(12, 50);
+
+        BarData data = new BarData(new ArrayList<String>(), new ArrayList<BarDataSet>());
+        mChart.setData(data);
 
         Legend l = mChart.getLegend();
         l.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
@@ -102,23 +103,19 @@ public class BarChartFragment extends Fragment implements OnChartValueSelectedLi
         return rootView;
     }
 
-    private void setData(int count, float range) {
+    public void update(TrafficReport report) {
 
-        ArrayList<String> xVals = new ArrayList<String>();
-        for (int i = 0; i < count; i++) {
-            xVals.add(mMonths[i % 12]);
-        }
-
+        ArrayList<String> xVals = (ArrayList) report.getDaysText();
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
-
-        for (int i = 0; i < count; i++) {
-            float mult = (range + 1);
-            float val = (float) (Math.random() * mult);
-            yVals1.add(new BarEntry(val, i));
+        List<Float> vals = report.getDaysTotal();
+        int counter = 0;
+        for (Float val : vals) {
+            yVals1.add(new BarEntry(val, counter));
+            counter++;
         }
 
         BarDataSet set1 = new BarDataSet(yVals1, "DataSet");
-        set1.setBarSpacePercent(35f);
+        set1.setBarSpacePercent(10f);
 
         ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
         dataSets.add(set1);

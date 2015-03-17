@@ -12,11 +12,13 @@ import android.widget.TextView;
 
 import de.doofmars.ghb.api.DataLoader;
 import de.doofmars.ghb.fragments.BarChartFragment;
+import de.doofmars.ghb.model.TrafficReport;
 
 
 public class Statistics extends ActionBarActivity {
 
     private final static String TRAFFIC_CALL = "https://ghb.hs-furtwangen.de/api/call?method=t&key=";
+    private BarChartFragment barChartFragment = new BarChartFragment();
 
 
     @Override
@@ -25,7 +27,7 @@ public class Statistics extends ActionBarActivity {
         setContentView(R.layout.activity_statistics);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new BarChartFragment())
+                    .add(R.id.container, barChartFragment)
                     .commit();
         }
 
@@ -61,8 +63,7 @@ public class Statistics extends ActionBarActivity {
         new DataLoader(this).execute(TRAFFIC_CALL + preferences.getString("api_key", ""));
     }
 
-    public void onBackgroundTaskCompleted(String result) {
-        TextView output = (TextView) findViewById(R.id.tv_output);
-        output.setText(result);
+    public void onBackgroundTaskCompleted(TrafficReport report) {
+        barChartFragment.update(report);
     }
 }
