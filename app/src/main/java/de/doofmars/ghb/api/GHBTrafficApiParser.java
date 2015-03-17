@@ -1,4 +1,4 @@
-package de.doofmars.ghb.model;
+package de.doofmars.ghb.api;
 
 import android.util.Log;
 
@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+
+import de.doofmars.ghb.model.Day;
 
 /**
  * Created by Jan on 14.03.2015.

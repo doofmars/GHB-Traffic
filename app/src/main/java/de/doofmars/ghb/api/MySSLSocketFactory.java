@@ -1,4 +1,4 @@
-package de.doofmars.ghb;
+package de.doofmars.ghb.api;
 
 import java.io.IOException;
 import java.net.Socket;

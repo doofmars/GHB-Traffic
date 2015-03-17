@@ -1,4 +1,4 @@
-package de.doofmars.ghb;
+package de.doofmars.ghb.api;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -27,11 +27,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.security.KeyStore;
-import java.util.logging.Logger;
 
-import de.doofmars.ghb.model.GHBTrafficApiParser;
+import de.doofmars.ghb.Statistics;
 
 /**
  * Created by Jan on 14.03.2015.
@@ -39,7 +37,7 @@ import de.doofmars.ghb.model.GHBTrafficApiParser;
 public class DataLoader extends AsyncTask<String, Void, String> {
     Statistics caller;
 
-    DataLoader(Statistics caller) {
+    public DataLoader(Statistics caller) {
         this.caller = caller;
     }
 
