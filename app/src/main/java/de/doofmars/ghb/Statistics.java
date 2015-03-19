@@ -2,13 +2,13 @@ package de.doofmars.ghb;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import de.doofmars.ghb.api.DataLoader;
 import de.doofmars.ghb.fragments.BarChartFragment;
@@ -18,18 +18,18 @@ import de.doofmars.ghb.model.TrafficReport;
 public class Statistics extends ActionBarActivity {
 
     private final static String TRAFFIC_CALL = "https://ghb.hs-furtwangen.de/api/call?method=t&key=";
-    private BarChartFragment barChartFragment = new BarChartFragment();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, barChartFragment)
-                    .commit();
-        }
+//        if (savedInstanceState == null) {
+//
+//            getIntent().
+//            getSupportFragmentManager().beginTransaction()
+//                    .add(R.id.container, barChartFragment)
+//                    .commit();
+//        }
 
 
     }
@@ -64,6 +64,9 @@ public class Statistics extends ActionBarActivity {
     }
 
     public void onBackgroundTaskCompleted(TrafficReport report) {
-        barChartFragment.update(report);
+        getIntent().putExtra("trafficReport", report);
+        BarChartFragment barChart = new BarChartFragment();
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.container, barChart).commit();
     }
 }

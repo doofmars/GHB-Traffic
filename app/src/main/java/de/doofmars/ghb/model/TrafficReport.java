@@ -1,5 +1,6 @@
 package de.doofmars.ghb.model;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * Created by Jan on 17.03.2015.
  */
-public class TrafficReport {
+public class TrafficReport implements Serializable {
     List<Day> days;
 
     public TrafficReport() {
@@ -63,12 +64,12 @@ public class TrafficReport {
         for (Day day : this.days) {
             if (currentDate == null) {
                 currentDate = day.getDate();
-                output.add(new Float(day.getTotal())/100);
+                output.add(new Float(day.getTotal()));
             } else if (currentDate.before(day.getDate())) {
                 currentDate = day.getDate();
-                output.add(new Float(day.getTotal())/100);
+                output.add(new Float(day.getTotal()));
             } else {
-                output.set(output.size() - 1, output.get(output.size() - 1) + new Float(day.getTotal())/ 100);
+                output.set(output.size() - 1, output.get(output.size() - 1) + new Float(day.getTotal()));
             }
         }
         return output;

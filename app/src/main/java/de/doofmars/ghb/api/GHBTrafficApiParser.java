@@ -45,7 +45,7 @@ public class GHBTrafficApiParser {
                             parser.getAttributeValue(null, XML_MONTH),
                             parser.getAttributeValue(null, XML_YEAR),
                             parser.getAttributeValue(null, XML_DATE));
-                    Log.i("XML-Parser", currentDay.toString());
+                    Log.v("XML-Parser", currentDay.toString());
                     report.addDay(currentDay);
                 }
                 eventType = parser.next();

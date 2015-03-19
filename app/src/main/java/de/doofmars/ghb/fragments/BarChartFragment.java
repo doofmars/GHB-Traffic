@@ -1,5 +1,6 @@
 package de.doofmars.ghb.fragments;
 
+import android.content.Intent;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.Typeface;
@@ -22,6 +23,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.Highlight;
 import com.github.mikephil.charting.utils.ValueFormatter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +34,11 @@ import de.doofmars.ghb.model.TrafficReport;
 /**
  * Created by Jan on 16.03.2015.
  */
-public class BarChartFragment extends Fragment implements OnChartValueSelectedListener {
+public class BarChartFragment extends Fragment  {
 
     protected BarChart mChart;
+    private TrafficReport report;
+    private ValueFormatter mValueFormatter = new MyValueFormatter();
 //    private Typeface mTf;
 
     @Override
@@ -43,7 +47,6 @@ public class BarChartFragment extends Fragment implements OnChartValueSelectedLi
         View rootView = inflater.inflate(R.layout.fragment_barchart, container, false);
 
         mChart = (BarChart) rootView.findViewById(R.id.barChart);
-        mChart.setOnChartValueSelectedListener(this);
 
         mChart.setDrawBarShadow(true);
         mChart.setDrawValueAboveBar(true);
@@ -55,7 +58,7 @@ public class BarChartFragment extends Fragment implements OnChartValueSelectedLi
         mChart.setMaxVisibleValueCount(60);
 
         // scaling can now only be done on x- and y-axis separately
-        mChart.setPinchZoom(false);
+        mChart.setTouchEnabled(false);
 
         // draw shadows for each bar that show the maximum value
         // mChart.setDrawBarShadow(true);
@@ -73,23 +76,18 @@ public class BarChartFragment extends Fragment implements OnChartValueSelectedLi
         xAxis.setDrawGridLines(false);
         xAxis.setSpaceBetweenLabels(2);
 
-        ValueFormatter custom = new MyValueFormatter();
-
         YAxis leftAxis = mChart.getAxisLeft();
 //        leftAxis.setTypeface(mTf);
         leftAxis.setLabelCount(8);
-        leftAxis.setValueFormatter(custom);
+        leftAxis.setValueFormatter(mValueFormatter);
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
 
-        YAxis rightAxis = mChart.getAxisRight();
-        rightAxis.setDrawGridLines(false);
-//        rightAxis.setTypeface(mTf);
-        rightAxis.setLabelCount(8);
-        rightAxis.setValueFormatter(custom);
+        mChart.getAxisRight().setEnabled(false);
 
+        Intent intent = getActivity().getIntent();
+        report = (TrafficReport) intent.getSerializableExtra("trafficReport");
 
-        BarData data = new BarData(new ArrayList<String>(), new ArrayList<BarDataSet>());
-        mChart.setData(data);
+        this.update();
 
         Legend l = mChart.getLegend();
         l.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
@@ -103,7 +101,7 @@ public class BarChartFragment extends Fragment implements OnChartValueSelectedLi
         return rootView;
     }
 
-    public void update(TrafficReport report) {
+    private void update() {
 
         ArrayList<String> xVals = (ArrayList) report.getDaysText();
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
@@ -116,6 +114,7 @@ public class BarChartFragment extends Fragment implements OnChartValueSelectedLi
 
         BarDataSet set1 = new BarDataSet(yVals1, "DataSet");
         set1.setBarSpacePercent(10f);
+        set1.setValueFormatter(mValueFormatter);
 
         ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
         dataSets.add(set1);
@@ -126,21 +125,5 @@ public class BarChartFragment extends Fragment implements OnChartValueSelectedLi
 //        data.setValueTypeface(mTf);
 
         mChart.setData(data);
-    }
-
-    @Override
-    public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-        if (e == null)
-            return;
-
-        RectF bounds = mChart.getBarBounds((BarEntry) e);
-        PointF position = mChart.getPosition(e, YAxis.AxisDependency.LEFT);
-
-        Log.i("bounds", bounds.toString());
-        Log.i("position", position.toString());
-    }
-
-    @Override
-    public void onNothingSelected() {
     }
 }
