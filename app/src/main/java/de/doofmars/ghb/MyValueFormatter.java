@@ -7,12 +7,12 @@ import java.text.DecimalFormat;
 public class MyValueFormatter implements ValueFormatter {
 
     private DecimalFormat mFormat;
-    private final long KB_FACTOR = 1024;
-    private final long MB_FACTOR = 1048576;
-    private final long GB_FACTOR = 1073741824;
+    public static final long KB_FACTOR = 1024;
+    public static final long MB_FACTOR = 1048576;
+    public static final long GB_FACTOR = 1073741824;
 
     public MyValueFormatter() {
-        mFormat = new DecimalFormat("#####.00");
+        mFormat = new DecimalFormat("####0.00");
     }
     
     @Override

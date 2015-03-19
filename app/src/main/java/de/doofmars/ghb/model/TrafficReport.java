@@ -3,10 +3,12 @@ package de.doofmars.ghb.model;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
+import de.doofmars.ghb.MyValueFormatter;
+import de.doofmars.ghb.R;
 
 /**
  * Created by Jan on 17.03.2015.
@@ -73,6 +75,52 @@ public class TrafficReport implements Serializable {
             }
         }
         return output;
+    }
+
+    public int getDaysSize() {
+        int size = 0;
+        Date currentDate = null;
+        for (Day day : this.days) {
+            if (currentDate == null) {
+                currentDate = day.getDate();
+                size++;
+            } else if (currentDate.before(day.getDate())) {
+                currentDate = day.getDate();
+                size++;
+            }
+        }
+        return size;
+    }
+
+    public int[] getDaysColors() {
+        int[] output = new int[getDaysSize()];
+        List<Float> daysTotal = getDaysTotal();
+        int counter = 0;
+        for (Float total : daysTotal) {
+            output[counter] = colorPicker(total);
+            counter++;
+        }
+        return output;
+    }
+
+    private int colorPicker(float value) {
+        if (value > MyValueFormatter.GB_FACTOR * 25) {
+            return R.color.black;
+        } else if (value > MyValueFormatter.GB_FACTOR * 20) {
+            return R.color.darkred;
+        } else if (value > MyValueFormatter.GB_FACTOR * 5) {
+            return R.color.adarkred;
+        } else if (value > MyValueFormatter.GB_FACTOR * 4) {
+            return R.color.alightred;
+        } else if (value > MyValueFormatter.GB_FACTOR * 3) {
+            return R.color.adarkorange;
+        } else if (value > MyValueFormatter.GB_FACTOR * 2) {
+            return R.color.alightorange;
+        } else if (value > MyValueFormatter.GB_FACTOR * 1) {
+            return R.color.adarkgreen;
+        } else {
+            return R.color.alightgreen;
+        }
     }
 
     @Override

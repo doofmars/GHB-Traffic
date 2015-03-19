@@ -82,21 +82,15 @@ public class BarChartFragment extends Fragment  {
         leftAxis.setValueFormatter(mValueFormatter);
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
 
-        mChart.getAxisRight().setEnabled(false);
 
         Intent intent = getActivity().getIntent();
         report = (TrafficReport) intent.getSerializableExtra("trafficReport");
 
+        mChart.getAxisRight().setEnabled(false);
+
         this.update();
 
-        Legend l = mChart.getLegend();
-        l.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
-        l.setForm(Legend.LegendForm.SQUARE);
-        l.setFormSize(9f);
-        l.setTextSize(11f);
-        l.setXEntrySpace(4f);
-
-        // mChart.setDrawLegend(false);
+        mChart.getLegend().setEnabled(false);
 
         return rootView;
     }
@@ -115,6 +109,7 @@ public class BarChartFragment extends Fragment  {
         BarDataSet set1 = new BarDataSet(yVals1, "DataSet");
         set1.setBarSpacePercent(10f);
         set1.setValueFormatter(mValueFormatter);
+        set1.setColors(report.getDaysColors(), getActivity().getApplicationContext());
 
         ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
         dataSets.add(set1);
