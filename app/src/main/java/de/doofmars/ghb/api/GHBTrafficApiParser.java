@@ -9,6 +9,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringReader;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +56,11 @@ public class GHBTrafficApiParser {
             Log.e("XML-Parser", "XmlPullParserException", e);
         } catch (IOException e) {
             Log.e("XML-Parser", "IOException", e);
+        } catch (ParseException e) {
+            Log.e("XML-Parser", "Invalid argument value", e);
+            for (int i = 0; i < parser.getAttributeCount(); i++) {
+                Log.e("XML-Parser", "Attribute " + i + ": " +  parser.getAttributeValue(i));
+            }
         }
     }
 

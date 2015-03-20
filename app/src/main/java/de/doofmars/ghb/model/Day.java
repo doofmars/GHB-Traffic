@@ -14,17 +14,14 @@ public class Day implements Comparable<Day>  {
     private int year;
     private Date date;
 
-    public Day(String total, String host_id, String hostname, String day, String month, String year, String dateString) {
+    public Day(String total, String host_id, String hostname, String day, String month, String year, String dateString) throws NumberFormatException, ParseException {
         this.total = Long.valueOf(total);
         this.host_id = Long.valueOf(host_id);
         this.hostname = hostname;
         this.day = Integer.valueOf(day);
         this.year = Integer.valueOf(year);
-        try {
-            this.date = DF.parse(dateString);
-        } catch (ParseException e) {
-            this.date = new Date();
-        }
+        this.date = DF.parse(dateString);
+
     }
 
     public long getTotal() {
