@@ -15,7 +15,12 @@ import de.doofmars.ghb.R;
  */
 public class TrafficReport implements Serializable {
     List<Day> days;
+    private final static String FREE_TRAFFIC = "Fee Traffic";
+    private final static String UNKNOWN_HOST = "unknown";
 
+    /**
+     * Generates the traffic report with empty days list
+     */
     public TrafficReport() {
         days = new ArrayList<Day>();
     }
@@ -71,7 +76,51 @@ public class TrafficReport implements Serializable {
                 currentDate = day.getDate();
                 output.add(new Float(day.getTotal()));
             } else {
-                output.set(output.size() - 1, output.get(output.size() - 1) + new Float(day.getTotal()));
+                output.set(output.size() - 1, output.get(output.size() - 1) + Float.valueOf(day.getTotal()));
+            }
+        }
+        return output;
+    }
+
+    public float getTotal() {
+        float total = 0;
+
+        for (Day day : this.days) {
+            total += day.getTotal();
+        }
+        return total;
+    }
+
+    public ArrayList<String> getHosts() {
+        ArrayList<String> output = new ArrayList<>();
+        if (getTotal() < CustomValueFormatter.GB_FACTOR * 25) {
+            output.add(FREE_TRAFFIC);
+        }
+        for (Day day : this.days) {
+            if (!output.contains(day.getHostname())) {
+                output.add(day.getHostname());
+            }
+        }
+        return output;
+    }
+
+    public String getHost(int i) {
+        ArrayList<String> hosts = getHosts();
+        if (i < hosts.size()) {
+            return hosts.get(i);
+        } else {
+            return UNKNOWN_HOST;
+        }
+    }
+
+    public float getTrafficByHost(String host) {
+        float output = 0;
+        if (host.equals(FREE_TRAFFIC)) {
+            return CustomValueFormatter.GB_FACTOR * 25 - getTotal();
+        }
+        for (Day day : this.days) {
+            if (day.getHostname().equals(host)) {
+                output += day.getTotal();
             }
         }
         return output;
@@ -103,6 +152,11 @@ public class TrafficReport implements Serializable {
         return output;
     }
 
+    /**
+     * Colorpicker to determine the entry color depending on used traffic
+     * @param value the used traffic
+     * @return a color from colors.xml
+     */
     private int colorPicker(float value) {
         if (value > CustomValueFormatter.GB_FACTOR * 25) {
             return R.color.black;
