@@ -12,6 +12,7 @@ import android.view.View;
 
 import de.doofmars.ghb.api.DataLoader;
 import de.doofmars.ghb.fragments.BarChartFragment;
+import de.doofmars.ghb.fragments.PieChartFragment;
 import de.doofmars.ghb.model.TrafficReport;
 
 
@@ -65,7 +66,8 @@ public class Statistics extends ActionBarActivity {
 
     public void onBackgroundTaskCompleted(TrafficReport report) {
         getIntent().putExtra("trafficReport", report);
-        BarChartFragment barChart = new BarChartFragment();
+        PieChartFragment barChart = new PieChartFragment();
+
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.container, barChart).commit();
     }
