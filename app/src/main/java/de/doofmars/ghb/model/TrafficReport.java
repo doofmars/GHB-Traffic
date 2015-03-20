@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import de.doofmars.ghb.MyValueFormatter;
+import de.doofmars.ghb.util.CustomValueFormatter;
 import de.doofmars.ghb.R;
 
 /**
@@ -104,19 +104,19 @@ public class TrafficReport implements Serializable {
     }
 
     private int colorPicker(float value) {
-        if (value > MyValueFormatter.GB_FACTOR * 25) {
+        if (value > CustomValueFormatter.GB_FACTOR * 25) {
             return R.color.black;
-        } else if (value > MyValueFormatter.GB_FACTOR * 20) {
+        } else if (value > CustomValueFormatter.GB_FACTOR * 20) {
             return R.color.darkred;
-        } else if (value > MyValueFormatter.GB_FACTOR * 5) {
+        } else if (value > CustomValueFormatter.GB_FACTOR * 5) {
             return R.color.adarkred;
-        } else if (value > MyValueFormatter.GB_FACTOR * 4) {
+        } else if (value > CustomValueFormatter.GB_FACTOR * 4) {
             return R.color.alightred;
-        } else if (value > MyValueFormatter.GB_FACTOR * 3) {
+        } else if (value > CustomValueFormatter.GB_FACTOR * 3) {
             return R.color.adarkorange;
-        } else if (value > MyValueFormatter.GB_FACTOR * 2) {
+        } else if (value > CustomValueFormatter.GB_FACTOR * 2) {
             return R.color.alightorange;
-        } else if (value > MyValueFormatter.GB_FACTOR * 1) {
+        } else if (value > CustomValueFormatter.GB_FACTOR * 1) {
             return R.color.adarkgreen;
         } else {
             return R.color.alightgreen;
