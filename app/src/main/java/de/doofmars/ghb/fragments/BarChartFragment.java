@@ -13,6 +13,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.ValueFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +29,7 @@ public class BarChartFragment extends Fragment  {
 
     protected BarChart mChart;
     private TrafficReport report;
-    private com.github.mikephil.charting.utils.ValueFormatter mValueFormatter = new CustomValueFormatter();
-//    private Typeface mTf;
+    private ValueFormatter mValueFormatter = new CustomValueFormatter();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,7 +61,7 @@ public class BarChartFragment extends Fragment  {
 
         //Load the data
         Intent intent = getActivity().getIntent();
-        report = (TrafficReport) intent.getSerializableExtra("trafficReport");
+        report = (TrafficReport) intent.getSerializableExtra(getResources().getString(R.string.traffic_report_key));
 
         this.update();
 
