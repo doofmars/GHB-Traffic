@@ -1,18 +1,18 @@
-package de.doofmars.ghb;
+package de.doofmars.ghb.util;
 
 import com.github.mikephil.charting.utils.ValueFormatter;
 
 import java.text.DecimalFormat;
 
-public class MyValueFormatter implements ValueFormatter {
+public class CustomValueFormatter implements com.github.mikephil.charting.utils.ValueFormatter {
 
     private DecimalFormat mFormat;
     public static final long KB_FACTOR = 1024;
     public static final long MB_FACTOR = 1048576;
     public static final long GB_FACTOR = 1073741824;
 
-    public MyValueFormatter() {
-        mFormat = new DecimalFormat("####0.00");
+    public CustomValueFormatter() {
+        mFormat = new DecimalFormat("#0.00");
     }
     
     @Override
