@@ -11,6 +11,9 @@ import de.doofmars.ghb.util.CustomValueFormatter;
 import de.doofmars.ghb.R;
 
 /**
+ * TrafficReport class to collect the day data and
+ * calculate the information necessary for the graphs
+ *
  * Created by Jan on 17.03.2015.
  */
 public class TrafficReport implements Serializable {
@@ -30,15 +33,30 @@ public class TrafficReport implements Serializable {
         Collections.sort(days);
     }
 
+    /**
+     * Get all days
+     *
+     * @return
+     */
     public List<Day> getDays() {
         return days;
     }
 
+    /**
+     * Function to replace the days list
+     *
+     * @param days
+     */
     public void setDays(List<Day> days) {
         this.days = days;
         Collections.sort(days);
     }
 
+    /**
+     * Function to add a single day
+     *
+     * @param day
+     */
     public void addDay(Day day) {
         if (!this.days.contains(day)) {
             this.days.add(day);
@@ -46,6 +64,11 @@ public class TrafficReport implements Serializable {
         }
     }
 
+    /**
+     * Get the formatted name of each day as String Format: "E"
+     *
+     * @return
+     */
     public List<String> getDaysText() {
         List<String> output = new ArrayList<String>();
         SimpleDateFormat df = new SimpleDateFormat("E");
@@ -64,6 +87,11 @@ public class TrafficReport implements Serializable {
         return output;
     }
 
+    /**
+     * Gets the total traffic for each individual day
+     *
+     * @return total traffic list
+     */
     public List<Float> getDaysTotal() {
         List<Float> output = new ArrayList<Float>();
         Date currentDate = null;
@@ -82,6 +110,11 @@ public class TrafficReport implements Serializable {
         return output;
     }
 
+    /**
+     * Gets the total amount of traffic used
+     *
+     * @return total traffic
+     */
     public float getTotal() {
         float total = 0;
 
@@ -91,6 +124,11 @@ public class TrafficReport implements Serializable {
         return total;
     }
 
+    /**
+     * Gets a list of distinct hostnames
+     *
+     * @return
+     */
     public ArrayList<String> getHosts() {
         ArrayList<String> output = new ArrayList<>();
         if (getTotal() < CustomValueFormatter.GB_FACTOR * 25) {
@@ -104,6 +142,12 @@ public class TrafficReport implements Serializable {
         return output;
     }
 
+    /**
+     * Get the hostname with the position i
+     *
+     * @param i the position
+     * @return the host with id i from getHosts()
+     */
     public String getHost(int i) {
         ArrayList<String> hosts = getHosts();
         if (i < hosts.size()) {
@@ -113,8 +157,15 @@ public class TrafficReport implements Serializable {
         }
     }
 
+    /**
+     * Returns the total traffic for the given hostname
+     *
+     * @param host the given host
+     * @return the traffic for the host or zero if host is unknown
+     */
     public float getTrafficByHost(String host) {
         float output = 0;
+        //Special case, we have the free traffic
         if (host.equals(FREE_TRAFFIC)) {
             return CustomValueFormatter.GB_FACTOR * 25 - getTotal();
         }
@@ -126,6 +177,11 @@ public class TrafficReport implements Serializable {
         return output;
     }
 
+    /**
+     * Number of different days in the days list
+     *
+     * @return
+     */
     public int getDaysSize() {
         int size = 0;
         Date currentDate = null;
@@ -141,6 +197,11 @@ public class TrafficReport implements Serializable {
         return size;
     }
 
+    /**
+     * Gets a list of R.colours to display in the bar-chart
+     *
+     * @return colour ids
+     */
     public int[] getDaysColors() {
         int[] output = new int[getDaysSize()];
         List<Float> daysTotal = getDaysTotal();

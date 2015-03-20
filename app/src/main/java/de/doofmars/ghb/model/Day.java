@@ -4,6 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * The Day class represents a single etry parsed from the XML Api
+ */
 public class Day implements Comparable<Day>  {
     private final static SimpleDateFormat DF = new SimpleDateFormat("d.MM.yyyy");
     private long total;
@@ -14,6 +17,19 @@ public class Day implements Comparable<Day>  {
     private int year;
     private Date date;
 
+    /**
+     * Construct a day element, will do the transformation from String to float, int and Date
+     *
+     * @param total
+     * @param host_id
+     * @param hostname
+     * @param day
+     * @param month
+     * @param year
+     * @param dateString
+     * @throws NumberFormatException parsing error with a number value
+     * @throws ParseException parsing error with a number Date
+     */
     public Day(String total, String host_id, String hostname, String day, String month, String year, String dateString) throws NumberFormatException, ParseException {
         this.total = Long.valueOf(total);
         this.host_id = Long.valueOf(host_id);
