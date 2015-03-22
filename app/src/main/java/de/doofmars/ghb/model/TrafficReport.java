@@ -18,7 +18,7 @@ import de.doofmars.ghb.R;
  */
 public class TrafficReport implements Serializable {
     List<Day> days;
-    private final static String FREE_TRAFFIC = "Fee Traffic";
+    private final static String FREE_TRAFFIC = "Free Traffic";
     private final static String UNKNOWN_HOST = "unknown";
 
     /**

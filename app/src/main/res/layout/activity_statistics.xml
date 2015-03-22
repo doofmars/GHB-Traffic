@@ -1,11 +1,14 @@
-<ScrollView
+<android.support.v4.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Statistics"
     tools:ignore="MergeRootFrame">
-
+<ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
@@ -26,12 +29,6 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_refresh"
-            android:id="@+id/bt_refresh"
-            android:onClick="refreshData"
-            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 </ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

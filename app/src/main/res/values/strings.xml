@@ -11,4 +11,6 @@
     <string name="pie_chart_center_label">Traffic by Host</string>
     <string name="pie_chart_legend_label">Hosts</string>
     <string name="traffic_report_key">trafficReport</string>
+    <string name="message_key">message</string>
+    <string name="message_api_key">No API-Key is set.</string>
 </resources>

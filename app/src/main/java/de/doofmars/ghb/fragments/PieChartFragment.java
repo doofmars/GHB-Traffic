@@ -3,7 +3,6 @@ package de.doofmars.ghb.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +77,7 @@ public class PieChartFragment extends Fragment implements OnChartValueSelectedLi
         dataSet.setSliceSpace(3f);
 
         // add a lot of colors
-        ArrayList<Integer> colors = new ArrayList<Integer>();
+        ArrayList<Integer> colors = new ArrayList<>();
         for (int c : ColorTemplate.VORDIPLOM_COLORS)
             colors.add(c);
         for (int c : ColorTemplate.JOYFUL_COLORS)

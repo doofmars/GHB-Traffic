@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,25 +13,35 @@ import android.view.View;
 
 import de.doofmars.ghb.api.DataLoader;
 import de.doofmars.ghb.fragments.BarChartFragment;
+import de.doofmars.ghb.fragments.GeneralFragment;
 import de.doofmars.ghb.fragments.PieChartFragment;
 import de.doofmars.ghb.model.TrafficReport;
 
 
-public class Statistics extends ActionBarActivity {
+public class Statistics extends ActionBarActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private final static String TRAFFIC_CALL = "https://ghb.hs-furtwangen.de/api/call?method=t&key=";
+    private SwipeRefreshLayout swipeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
-//        if (savedInstanceState == null) {
-//
-//            getIntent().
-//            getSupportFragmentManager().beginTransaction()
-//                    .add(R.id.container, barChartFragment)
-//                    .commit();
-//        }
+
+        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
+        swipeLayout.setOnRefreshListener(this);
+        swipeLayout.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+        if (savedInstanceState == null) {
+
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container_general, new GeneralFragment())
+                    .commit();
+        }
 
 
     }
@@ -59,18 +70,33 @@ public class Statistics extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void refreshData(View v) {
+    @Override
+    public void onRefresh() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        new DataLoader(this).execute(TRAFFIC_CALL + preferences.getString("api_key", ""));
+        if (preferences.contains("api_key")){
+            new DataLoader(this).execute(TRAFFIC_CALL + preferences.getString("api_key", ""));
+        } else {
+            swipeLayout.setRefreshing(false);
+            getIntent().putExtra(getString(R.string.message_key), getString(R.string.message_api_key));
+
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction()
+                    .replace(R.id.container_general, new GeneralFragment()).commit();
+        }
     }
 
     public void onBackgroundTaskCompleted(TrafficReport report) {
-        getIntent().putExtra("trafficReport", report);
+        swipeLayout.setRefreshing(false);
+
+        getIntent().putExtra(getResources().getString(R.string.traffic_report_key), report);
+
         PieChartFragment pieChartFragment = new PieChartFragment();
         BarChartFragment barChartFragment = new BarChartFragment();
+        GeneralFragment generalFragment = new GeneralFragment();
 
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction()
+                .replace(R.id.container_general, generalFragment)
                 .replace(R.id.container_bar_chart, barChartFragment)
                 .replace(R.id.container_pie_chart, pieChartFragment).commit();
     }
