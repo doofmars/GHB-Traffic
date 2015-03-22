@@ -1,4 +1,4 @@
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -6,18 +6,32 @@
     tools:context=".Statistics"
     tools:ignore="MergeRootFrame">
 
-    <FrameLayout
-        android:id="@+id/container"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="left|top"></FrameLayout>
+        android:layout_height="wrap_content">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_refresh"
-        android:id="@+id/bt_refresh"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="refreshData" />
-</RelativeLayout>
+        <FrameLayout
+            android:id="@+id/container_general"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+
+        <FrameLayout
+            android:id="@+id/container_bar_chart"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+
+        <FrameLayout
+            android:id="@+id/container_pie_chart"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_refresh"
+            android:id="@+id/bt_refresh"
+            android:onClick="refreshData"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+</ScrollView>

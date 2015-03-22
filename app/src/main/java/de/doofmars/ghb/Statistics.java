@@ -66,9 +66,12 @@ public class Statistics extends ActionBarActivity {
 
     public void onBackgroundTaskCompleted(TrafficReport report) {
         getIntent().putExtra("trafficReport", report);
-        PieChartFragment barChart = new PieChartFragment();
+        PieChartFragment pieChartFragment = new PieChartFragment();
+        BarChartFragment barChartFragment = new BarChartFragment();
 
         FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.container, barChart).commit();
+        manager.beginTransaction()
+                .replace(R.id.container_bar_chart, barChartFragment)
+                .replace(R.id.container_pie_chart, pieChartFragment).commit();
     }
 }
