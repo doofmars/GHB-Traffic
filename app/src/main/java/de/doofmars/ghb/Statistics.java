@@ -9,7 +9,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import de.doofmars.ghb.api.DataLoader;
 import de.doofmars.ghb.fragments.BarChartFragment;
@@ -20,7 +19,8 @@ import de.doofmars.ghb.model.TrafficReport;
 
 public class Statistics extends ActionBarActivity implements SwipeRefreshLayout.OnRefreshListener {
 
-    private final static String TRAFFIC_CALL = "https://ghb.hs-furtwangen.de/api/call?method=t&key=";
+    private final static String TRAFFIC_CALL_GHB = "https://ghb.hs-furtwangen.de/api/call?method=t&key=";
+    private final static String TRAFFIC_CALL_ASK = "https://ask.hs-furtwangen.de/api/call?method=t&key=";
     private SwipeRefreshLayout swipeLayout;
 
     @Override
@@ -73,8 +73,12 @@ public class Statistics extends ActionBarActivity implements SwipeRefreshLayout.
     @Override
     public void onRefresh() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        if (preferences.contains("api_key")){
-            new DataLoader(this).execute(TRAFFIC_CALL + preferences.getString("api_key", ""));
+        if (preferences.contains("api_key")) {
+            if (preferences.getString("dorm_name", getString(R.string.default_dorm_name)).equals(getString(R.string.default_dorm_name))) {
+                new DataLoader(this).execute(TRAFFIC_CALL_GHB + preferences.getString("api_key", ""));
+            } else {
+                new DataLoader(this).execute(TRAFFIC_CALL_ASK + preferences.getString("api_key", ""));
+            }
         } else {
             swipeLayout.setRefreshing(false);
             getIntent().putExtra(getString(R.string.message_key), getString(R.string.message_api_key));

@@ -17,7 +17,9 @@ import de.doofmars.ghb.R;
  * Created by Jan on 17.03.2015.
  */
 public class TrafficReport implements Serializable {
-    List<Day> days;
+    private List<Day> days;
+    private String message;
+
     private final static String FREE_TRAFFIC = "Free Traffic";
     private final static String UNKNOWN_HOST = "unknown";
 
@@ -40,6 +42,14 @@ public class TrafficReport implements Serializable {
      */
     public List<Day> getDays() {
         return days;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     /**

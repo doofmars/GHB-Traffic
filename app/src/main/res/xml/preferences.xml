@@ -4,12 +4,40 @@
         android:key="api_group"
         android:title="@string/settings_api_group" >
 
+        <ListPreference
+            android:key="dorm_name"
+            android:summary="@string/settings_dorm_name_summary"
+            android:title="@string/settings_dorm_name"
+            android:entries="@array/dorm_names"
+            android:entryValues="@array/dorm_names"
+            />
+
         <EditTextPreference
             android:title="@string/settings_api_key"
             android:summary="@string/settings_api_key_summary"
             android:inputType="textNoSuggestions"
             android:key="api_key" />
+
+        <Preference
+            android:key="get_key_GHB"
+            android:title="@string/settings_get_api_key_GHB"
+            android:summary="@string/settings_get_api_key_summary">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://ghb.hs-furtwangen.de/api"/>
+        </Preference>
+
+        <Preference
+            android:key="get_key_ASK"
+            android:title="@string/settings_get_api_key_ASK"
+            android:summary="@string/settings_get_api_key_summary">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://ask.hs-furtwangen.de/api"/>
+        </Preference>
+
     </PreferenceCategory>
+
     <PreferenceCategory
         android:title="@string/settings_about_group"
         android:key="about">

@@ -13,4 +13,14 @@
     <string name="traffic_report_key">trafficReport</string>
     <string name="message_key">message</string>
     <string name="message_api_key">No API-Key is set.</string>
+    <string name="default_dorm_name">GHB</string>
+    <string name="settings_dorm_name_summary">Select your dorm here</string>
+    <string name="settings_dorm_name">Dorm-Name</string>
+    <string name="settings_get_api_key_GHB">Get the GHB-API-Key</string>
+    <string name="settings_get_api_key_summary">Where to get the API-Key</string>
+    <string name="settings_get_api_key_ASK">Get the ASK-API-Key</string>
+    <string-array name="dorm_names">
+        <item>"ASK"</item>
+        <item>"GHB"</item>
+    </string-array>
 </resources>
