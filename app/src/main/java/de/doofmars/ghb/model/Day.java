@@ -35,6 +35,7 @@ public class Day implements Comparable<Day>  {
         this.host_id = Long.valueOf(host_id);
         this.hostname = hostname;
         this.day = Integer.valueOf(day);
+        this.month = Integer.valueOf(month);
         this.year = Integer.valueOf(year);
         this.date = DF.parse(dateString);
 

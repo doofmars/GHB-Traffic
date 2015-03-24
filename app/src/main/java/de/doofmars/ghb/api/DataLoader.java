@@ -33,8 +33,9 @@ import de.doofmars.ghb.R;
 import de.doofmars.ghb.Statistics;
 import de.doofmars.ghb.model.TrafficReport;
 
+
 /**
- * Created by Jan on 14.03.2015.
+ * Class to Load data from the XML interface
  */
 public class DataLoader extends AsyncTask<String, Void, TrafficReport> {
     Statistics caller;

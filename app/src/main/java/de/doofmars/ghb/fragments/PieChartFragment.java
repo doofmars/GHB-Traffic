@@ -23,9 +23,6 @@ import de.doofmars.ghb.R;
 import de.doofmars.ghb.model.TrafficReport;
 import de.doofmars.ghb.util.CustomValueFormatter;
 
-/**
- * Created by Jan on 20.03.2015.
- */
 public class PieChartFragment extends Fragment implements OnChartValueSelectedListener {
 
     private PieChart mChart;

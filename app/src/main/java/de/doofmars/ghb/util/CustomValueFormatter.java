@@ -1,12 +1,7 @@
 package de.doofmars.ghb.util;
 
-import com.github.mikephil.charting.utils.ValueFormatter;
-
 import java.text.DecimalFormat;
 
-/**
- * Custom value formatter used to format the Size information.
- */
 public class CustomValueFormatter implements com.github.mikephil.charting.utils.ValueFormatter {
 
     private DecimalFormat mFormat;

@@ -22,9 +22,6 @@ import de.doofmars.ghb.util.CustomValueFormatter;
 import de.doofmars.ghb.R;
 import de.doofmars.ghb.model.TrafficReport;
 
-/**
- * Created by Jan on 16.03.2015.
- */
 public class BarChartFragment extends Fragment  {
 
     protected BarChart mChart;
@@ -73,8 +70,8 @@ public class BarChartFragment extends Fragment  {
 
     private void update() {
 
-        ArrayList<String> xVals = (ArrayList) report.getDaysText();
-        ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
+        ArrayList xVals = (ArrayList) report.getDaysText();
+        ArrayList<BarEntry> yVals1 = new ArrayList<>();
         List<Float> vals = report.getDaysTotal();
         int counter = 0;
         for (Float val : vals) {
@@ -87,7 +84,7 @@ public class BarChartFragment extends Fragment  {
         set1.setValueFormatter(mValueFormatter);
         set1.setColors(report.getDaysColors(), getActivity().getApplicationContext());
 
-        ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
+        ArrayList<BarDataSet> dataSets = new ArrayList<>();
         dataSets.add(set1);
 
         BarData data = new BarData(xVals, dataSets);

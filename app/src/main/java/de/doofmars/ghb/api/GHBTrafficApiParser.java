@@ -16,9 +16,7 @@ import de.doofmars.ghb.model.Day;
 import de.doofmars.ghb.model.TrafficReport;
 
 public class GHBTrafficApiParser {
-    private StringReader input;
-    private TrafficReport report = new TrafficReport();
-    private Statistics caller;
+    private TrafficReport report;
     public final static String XML_TAG = "day";
     public final static String XML_STATUS = "status";
     public final static String XML_STATUS_SUCCESS = "success";
@@ -32,8 +30,8 @@ public class GHBTrafficApiParser {
     public final static String XML_DATE = "DATE";
 
     public GHBTrafficApiParser(String xml, XmlPullParser parser, Statistics caller) {
-        this.input = new StringReader(xml);
-        this.caller = caller;
+        StringReader input = new StringReader(xml);
+        report = new TrafficReport();
         boolean success = false;
 
         try {
