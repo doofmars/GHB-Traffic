@@ -13,6 +13,9 @@ import de.doofmars.ghb.R;
 import de.doofmars.ghb.model.TrafficReport;
 import de.doofmars.ghb.util.CustomValueFormatter;
 
+/**
+ * General fragment to display status bar
+ */
 public class GeneralFragment extends Fragment {
 
     @Override
@@ -29,6 +32,7 @@ public class GeneralFragment extends Fragment {
 
         if (report != null) {
             if (report.hasMessage()) {
+                //Display message if one is set
                 tv.setText(report.getMessage());
                 iv.setVisibility(View.INVISIBLE);
             } else {

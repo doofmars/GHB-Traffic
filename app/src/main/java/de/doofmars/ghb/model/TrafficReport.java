@@ -29,6 +29,11 @@ public class TrafficReport implements Serializable {
     public TrafficReport() {
         days = new ArrayList<Day>();
     }
+
+    /**
+     * Creates a TrafficReport with custom error-message
+     * @param message
+     */
     public TrafficReport(String message) {
         this.message = message;
         this.days = new ArrayList<Day>();
@@ -42,7 +47,7 @@ public class TrafficReport implements Serializable {
     /**
      * Get all days
      *
-     * @return
+     * @return all day objects
      */
     public List<Day> getDays() {
         return days;
@@ -52,6 +57,10 @@ public class TrafficReport implements Serializable {
         return message;
     }
 
+    /**
+     * Set a custom error-message
+     * @param message the error message
+     */
     public void setMessage(String message) {
         this.message = message;
     }

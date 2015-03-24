@@ -7,6 +7,9 @@ import android.preference.PreferenceFragment;
 
 import de.doofmars.ghb.R;
 
+/**
+ * Loads the settings fragment
+ */
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceChangeListener {
 
     @Override

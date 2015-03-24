@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * The Day class represents a single etry parsed from the XML Api
+ * The Day class represents a single entry parsed from the XML Api
  */
 public class Day implements Comparable<Day>  {
     private final static SimpleDateFormat DF = new SimpleDateFormat("d.MM.yyyy");

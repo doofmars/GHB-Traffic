@@ -23,6 +23,9 @@ import de.doofmars.ghb.R;
 import de.doofmars.ghb.model.TrafficReport;
 import de.doofmars.ghb.util.CustomValueFormatter;
 
+/**
+ * Fragment to display the data in an pie chart
+ */
 public class PieChartFragment extends Fragment implements OnChartValueSelectedListener {
 
     private PieChart mChart;
@@ -49,10 +52,9 @@ public class PieChartFragment extends Fragment implements OnChartValueSelectedLi
         //Load the data
         Intent intent = getActivity().getIntent();
         report = (TrafficReport) intent.getSerializableExtra(getResources().getString(R.string.traffic_report_key));
-        setData();
+        this.update();
 
         mChart.animateXY(1500, 1500);
-// mChart.spin(2000, 0, 360);
 
         Legend l = mChart.getLegend();
         l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
@@ -62,7 +64,10 @@ public class PieChartFragment extends Fragment implements OnChartValueSelectedLi
         return rootView;
     }
 
-   private void setData() {
+    /**
+     * Update function to fill the chart
+     */
+    private void update() {
         ArrayList<Entry> yVals1 = new ArrayList<>();
         ArrayList<String> xVals = report.getHosts();
 
@@ -92,7 +97,7 @@ public class PieChartFragment extends Fragment implements OnChartValueSelectedLi
         data.setValueFormatter(new PercentFormatter());
         data.setValueTextSize(11f);
         mChart.setData(data);
-// undo all highlights
+        // undo all highlights
         mChart.highlightValues(null);
         mChart.invalidate();
     }
@@ -101,7 +106,7 @@ public class PieChartFragment extends Fragment implements OnChartValueSelectedLi
     public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
         if (e == null)
             return;
-        mChart.setCenterText(report.getHost(e.getXIndex()) + "\n" +new CustomValueFormatter().getFormattedValue(e.getVal()));
+        mChart.setCenterText(report.getHost(e.getXIndex()) + "\n" + new CustomValueFormatter().getFormattedValue(e.getVal()));
     }
 
     @Override

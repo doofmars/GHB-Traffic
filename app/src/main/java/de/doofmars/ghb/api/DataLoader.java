@@ -33,7 +33,6 @@ import de.doofmars.ghb.R;
 import de.doofmars.ghb.Statistics;
 import de.doofmars.ghb.model.TrafficReport;
 
-
 /**
  * Class to Load data from the XML interface
  */
@@ -44,6 +43,10 @@ public class DataLoader extends AsyncTask<String, Void, TrafficReport> {
         this.caller = caller;
     }
 
+    /**
+     * Crate HTTPClient with custom SSLSocketFactory to cope with the API-SSL Certificate
+     * @return the HTTPClient
+     */
     private HttpClient getNewHttpClient() {
         try {
             KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
@@ -68,6 +71,12 @@ public class DataLoader extends AsyncTask<String, Void, TrafficReport> {
         }
     }
 
+    /**
+     * Async data loading
+     *
+     * @param urls to parse
+     * @return a Traffic Report
+     */
     protected TrafficReport doInBackground(String... urls) {
         Log.i("DataLoader", "Load data from " + urls[0]);
         StringBuilder builder = new StringBuilder();
@@ -80,6 +89,7 @@ public class DataLoader extends AsyncTask<String, Void, TrafficReport> {
             int statusCode = statusLine.getStatusCode();
             Log.i("DataLoader", "Data received with status code " + statusCode);
             if (statusCode == 200) {
+                //Success we have the data
                 HttpEntity entity = response.getEntity();
                 InputStream content = entity.getContent();
                 BufferedReader reader = new BufferedReader(
@@ -90,8 +100,12 @@ public class DataLoader extends AsyncTask<String, Void, TrafficReport> {
                 }
                 GHBTrafficApiParser ghbTrafficApiParser = new GHBTrafficApiParser(builder.toString(), caller);
 
+                //release connection and return data
+                response.getEntity().consumeContent();
                 return ghbTrafficApiParser.getReport();
             } else {
+                response.getEntity().consumeContent();
+                //report connection error and return empty report
                 return new TrafficReport(caller.getString(R.string.error_fetch));
             }
         } catch (ClientProtocolException e) {

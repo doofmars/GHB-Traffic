@@ -80,6 +80,7 @@ public class Statistics extends ActionBarActivity implements SwipeRefreshLayout.
                 new DataLoader(this).execute(TRAFFIC_CALL_ASK + preferences.getString("api_key", ""));
             }
         } else {
+            //api-key is not yet set
             swipeLayout.setRefreshing(false);
             getIntent().putExtra(getString(R.string.traffic_report_key), new TrafficReport(getString(R.string.message_api_key)));
 
@@ -89,6 +90,10 @@ public class Statistics extends ActionBarActivity implements SwipeRefreshLayout.
         }
     }
 
+    /**
+     * Function is called if async task in DataLoader has processed the data
+     * @param report the generated report
+     */
     public void onBackgroundTaskCompleted(TrafficReport report) {
         swipeLayout.setRefreshing(false);
 

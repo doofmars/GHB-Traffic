@@ -22,6 +22,9 @@ import de.doofmars.ghb.util.CustomValueFormatter;
 import de.doofmars.ghb.R;
 import de.doofmars.ghb.model.TrafficReport;
 
+/**
+ * Fragment to display the data in an bar chart
+ */
 public class BarChartFragment extends Fragment  {
 
     protected BarChart mChart;
@@ -59,7 +62,6 @@ public class BarChartFragment extends Fragment  {
         //Load the data
         Intent intent = getActivity().getIntent();
         report = (TrafficReport) intent.getSerializableExtra(getResources().getString(R.string.traffic_report_key));
-
         this.update();
 
         mChart.getAxisRight().setEnabled(false);
@@ -68,6 +70,9 @@ public class BarChartFragment extends Fragment  {
         return rootView;
     }
 
+    /**
+     * Update function to fill the chart
+     */
     private void update() {
 
         ArrayList xVals = (ArrayList) report.getDaysText();
@@ -88,9 +93,7 @@ public class BarChartFragment extends Fragment  {
         dataSets.add(set1);
 
         BarData data = new BarData(xVals, dataSets);
-//        data.setValueFormatter(new MyValueFormatter());
         data.setValueTextSize(10f);
-//        data.setValueTypeface(mTf);
 
         mChart.setData(data);
     }
