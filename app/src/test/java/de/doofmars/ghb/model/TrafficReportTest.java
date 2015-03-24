@@ -3,10 +3,13 @@ package de.doofmars.ghb.model;
 import junit.framework.TestCase;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import de.doofmars.ghb.util.CustomValueFormatter;
 
 public class TrafficReportTest extends TestCase {
 
@@ -41,10 +44,17 @@ public class TrafficReportTest extends TestCase {
     public void testGetDaysTotal() throws Exception {
         List<Float> days = mockReport.getDaysTotal();
         assertEquals(4, days.size());
-        assertEquals(6.0f, days.get(0));
-        assertEquals(5.46f, days.get(1));
-        assertEquals(7.46f, days.get(2));
-        assertEquals(6.0f, days.get(3));
+        assertEquals(600f, days.get(0));
+        assertEquals(546f, days.get(1));
+        assertEquals(746f, days.get(2));
+        assertEquals(600f, days.get(3));
+    }
 
+    public void testGetHosts() throws Exception {
+        ArrayList<String> hosts = mockReport.getHosts();
+        float hostFree = mockReport.getTrafficByHost(hosts.get(0));
+        float hostA = mockReport.getTrafficByHost(hosts.get(1));
+        float hostB = mockReport.getTrafficByHost(hosts.get(2));
+        assertEquals(CustomValueFormatter.GB_FACTOR * 25f, hostFree + hostA + hostB);
     }
 }

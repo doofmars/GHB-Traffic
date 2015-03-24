@@ -32,7 +32,6 @@ import de.doofmars.ghb.util.CustomValueFormatter;
 public class GeneralFragment extends Fragment {
 
     private TrafficReport report;
-    private String message;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,18 +41,18 @@ public class GeneralFragment extends Fragment {
 
         Intent intent = getActivity().getIntent();
         report = (TrafficReport) intent.getSerializableExtra(getResources().getString(R.string.traffic_report_key));
-        message = (String) intent.getSerializableExtra(getResources().getString(R.string.message_key));
 
         TextView tv = (TextView) rootView.findViewById(R.id.tv_dynamic);
         ImageView iv = (ImageView) rootView.findViewById(R.id.iv_pull_arrow);
 
-        if (message != null){
-            tv.setText(message);
-            iv.setVisibility(View.INVISIBLE);
-        }
-        if (report != null){
-            tv.setText(new CustomValueFormatter().getFormattedValue(report.getTotal())  + " / 25GB used");
-            iv.setVisibility(View.INVISIBLE);
+        if (report != null) {
+            if (report.hasMessage()) {
+                tv.setText(report.getMessage());
+                iv.setVisibility(View.INVISIBLE);
+            } else {
+                tv.setText(new CustomValueFormatter().getFormattedValue(report.getTotal()) + " / 25GB used");
+                iv.setVisibility(View.INVISIBLE);
+            }
         }
         return rootView;
     }

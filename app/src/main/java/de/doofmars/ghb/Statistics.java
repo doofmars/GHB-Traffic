@@ -81,7 +81,7 @@ public class Statistics extends ActionBarActivity implements SwipeRefreshLayout.
             }
         } else {
             swipeLayout.setRefreshing(false);
-            getIntent().putExtra(getString(R.string.message_key), getString(R.string.message_api_key));
+            getIntent().putExtra(getString(R.string.traffic_report_key), new TrafficReport(getString(R.string.message_api_key)));
 
             FragmentManager manager = getSupportFragmentManager();
             manager.beginTransaction()
@@ -92,16 +92,22 @@ public class Statistics extends ActionBarActivity implements SwipeRefreshLayout.
     public void onBackgroundTaskCompleted(TrafficReport report) {
         swipeLayout.setRefreshing(false);
 
-        getIntent().putExtra(getResources().getString(R.string.traffic_report_key), report);
-
-        PieChartFragment pieChartFragment = new PieChartFragment();
-        BarChartFragment barChartFragment = new BarChartFragment();
+        getIntent().putExtra(getString(R.string.traffic_report_key), report);
         GeneralFragment generalFragment = new GeneralFragment();
-
         FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction()
-                .replace(R.id.container_general, generalFragment)
-                .replace(R.id.container_bar_chart, barChartFragment)
-                .replace(R.id.container_pie_chart, pieChartFragment).commit();
+
+        if (!report.hasMessage()) {
+            PieChartFragment pieChartFragment = new PieChartFragment();
+            BarChartFragment barChartFragment = new BarChartFragment();
+
+            manager.beginTransaction()
+                    .replace(R.id.container_general, generalFragment)
+                    .replace(R.id.container_bar_chart, barChartFragment)
+                    .replace(R.id.container_pie_chart, pieChartFragment).commit();
+        } else {
+            manager.beginTransaction()
+                    .replace(R.id.container_general, generalFragment).commit();
+        }
+
     }
 }

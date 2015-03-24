@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.KeyStore;
 
+import de.doofmars.ghb.R;
 import de.doofmars.ghb.Statistics;
 import de.doofmars.ghb.model.TrafficReport;
 
@@ -76,6 +77,7 @@ public class DataLoader extends AsyncTask<String, Void, TrafficReport> {
             HttpResponse response = client.execute(httpGet);
             StatusLine statusLine = response.getStatusLine();
             int statusCode = statusLine.getStatusCode();
+            Log.i("DataLoader", "Data received with status code " + statusCode);
             if (statusCode == 200) {
                 HttpEntity entity = response.getEntity();
                 InputStream content = entity.getContent();
@@ -85,10 +87,11 @@ public class DataLoader extends AsyncTask<String, Void, TrafficReport> {
                 while ((line = reader.readLine()) != null) {
                     builder.append(line);
                 }
-                GHBTrafficApiParser ghbTrafficApiParser = new GHBTrafficApiParser(builder.toString());
+                GHBTrafficApiParser ghbTrafficApiParser = new GHBTrafficApiParser(builder.toString(), caller);
+
                 return ghbTrafficApiParser.getReport();
             } else {
-                return new TrafficReport();
+                return new TrafficReport(caller.getString(R.string.error_fetch));
             }
         } catch (ClientProtocolException e) {
             Log.e("Getter", "ClientProtocolException", e);
@@ -97,7 +100,7 @@ public class DataLoader extends AsyncTask<String, Void, TrafficReport> {
         } catch (XmlPullParserException e) {
             Log.e("Getter", "XmlPullParserException", e);
         }
-        return new TrafficReport();
+        return new TrafficReport(caller.getString(R.string.error_fetch));
 
     }
 

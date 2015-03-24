@@ -29,6 +29,10 @@ public class TrafficReport implements Serializable {
     public TrafficReport() {
         days = new ArrayList<Day>();
     }
+    public TrafficReport(String message) {
+        this.message = message;
+        this.days = new ArrayList<Day>();
+    }
 
     public TrafficReport(List<Day> days) {
         this.days = days;
@@ -50,6 +54,14 @@ public class TrafficReport implements Serializable {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public boolean hasMessage() {
+        if (this.message != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

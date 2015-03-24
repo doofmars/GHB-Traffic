@@ -4,10 +4,12 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
+import java.text.ParseException;
+
 public class DayTest extends TestCase {
 
     @Test
-    public void testCompareTo() {
+    public void testCompareTo() throws Exception {
         Day one = new Day("0", "123", "test", "01", "02", "2015", "01.02.2015");
         Day oneA = new Day("0", "123", "aTestA", "01", "02", "2015", "01.02.2015");
         Day oneB = new Day("0", "123", "testB", "01", "02", "2015", "01.02.2015");
