@@ -41,11 +41,20 @@
     <PreferenceCategory
         android:title="@string/settings_about_group"
         android:key="about">
-        <PreferenceScreen
-            android:title="@string/settings_about" >
+        <PreferenceScreen android:title="@string/settings_about">
             <Preference
                 android:summary="@string/settings_about_summary"
                 android:title="@string/app_name" />
+            <Preference
+                android:summary="@string/settings_about_usage_summary"
+                android:title="@string/settings_about_usage" />
+            <Preference
+                android:summary="@string/settings_about_contribute_summary"
+                android:title="@string/settings_about_contribute">
+                <intent
+                    android:action="android.intent.action.VIEW"
+                    android:data="https://github.com/doofmars/GHB-Traffic"/>
+            </Preference>
         </PreferenceScreen>
 
 

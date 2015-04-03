@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="GHB Traffic-Usage"
+        android:text="@string/general_fragment_title"
         android:id="@+id/tv_title"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Pull Down to Refresh"
+        android:text="@string/general_fragment_message"
         android:id="@+id/tv_dynamic"
         android:layout_below="@+id/tv_title"
         android:layout_centerHorizontal="true" />
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/iv_pull_arrow"
-        android:contentDescription="Pull Down"
+        android:contentDescription="@string/general_fragment_image_description"
         android:src="@mipmap/pull_arrow"
         android:alpha="0.5"
         android:layout_alignParentTop="true"
