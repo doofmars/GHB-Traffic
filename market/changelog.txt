@@ -1,0 +1,7 @@
+
+#1.1
+First Release
+
+*Added validation
+*Added About page
+*Refresh on startup
