@@ -7,8 +7,8 @@ import java.util.Date;
 /**
  * The Day class represents a single entry parsed from the XML Api
  */
-public class Day implements Comparable<Day>  {
-    private final static SimpleDateFormat DF = new SimpleDateFormat("d.MM.yyyy");
+public class Day implements Comparable<Day> {
+    public final static SimpleDateFormat DF = new SimpleDateFormat("d.MM.yyyy");
     private long total;
     private long host_id;
     private String hostname;

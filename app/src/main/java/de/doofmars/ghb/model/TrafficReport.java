@@ -256,7 +256,7 @@ public class TrafficReport implements Serializable {
             return R.color.darkred;
         } else if (value > CustomValueFormatter.GB_FACTOR * 5) {
             return R.color.adarkred;
-        } else if (value > CustomValueFormatter.GB_FACTOR * 4) {
+        } else if (value > CustomValueFormatter.GB_FACTOR * 3.5) {
             return R.color.alightred;
         } else if (value > CustomValueFormatter.GB_FACTOR * 3) {
             return R.color.adarkorange;
