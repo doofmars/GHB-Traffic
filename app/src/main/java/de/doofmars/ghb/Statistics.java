@@ -1,5 +1,6 @@
 package de.doofmars.ghb;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ public class Statistics extends ActionBarActivity implements SwipeRefreshLayout.
     private final static String TRAFFIC_CALL_GHB = "https://ghb.hs-furtwangen.de/api/call?method=t&key=";
     private final static String TRAFFIC_CALL_ASK = "https://ask.hs-furtwangen.de/api/call?method=t&key=";
     private SwipeRefreshLayout swipeLayout;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class Statistics extends ActionBarActivity implements SwipeRefreshLayout.
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+        progressDialog = new ProgressDialog(Statistics.this);
 
         if (savedInstanceState == null) {
 
@@ -43,6 +46,13 @@ public class Statistics extends ActionBarActivity implements SwipeRefreshLayout.
                     .commit();
         }
 
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        if (preferences.contains("api_key")) {
+            progressDialog.setMessage(getString(R.string.progress_dialog_message));
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.show();
+            this.onRefresh();
+        }
 
     }
 
@@ -96,6 +106,9 @@ public class Statistics extends ActionBarActivity implements SwipeRefreshLayout.
      */
     public void onBackgroundTaskCompleted(TrafficReport report) {
         swipeLayout.setRefreshing(false);
+        if (progressDialog.isShowing()) {
+            progressDialog.hide();
+        }
 
         getIntent().putExtra(getString(R.string.traffic_report_key), report);
         GeneralFragment generalFragment = new GeneralFragment();
