@@ -44,34 +44,6 @@ public class DataLoader extends AsyncTask<String, Void, TrafficReport> {
     }
 
     /**
-     * Crate HTTPClient with custom SSLSocketFactory to cope with the API-SSL Certificate
-     * @return the HTTPClient
-     */
-    private HttpClient getNewHttpClient() {
-        try {
-            KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-            trustStore.load(null, null);
-
-            MySSLSocketFactory sf = new MySSLSocketFactory(trustStore);
-            sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-
-            HttpParams params = new BasicHttpParams();
-            HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
-            HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
-
-            SchemeRegistry registry = new SchemeRegistry();
-            registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
-            registry.register(new Scheme("https", sf, 443));
-
-            ClientConnectionManager ccm = new ThreadSafeClientConnManager(params, registry);
-
-            return new DefaultHttpClient(ccm, params);
-        } catch (Exception e) {
-            return new DefaultHttpClient();
-        }
-    }
-
-    /**
      * Async data loading
      *
      * @param urls to parse
@@ -80,7 +52,7 @@ public class DataLoader extends AsyncTask<String, Void, TrafficReport> {
     protected TrafficReport doInBackground(String... urls) {
         Log.i("DataLoader", "Load data from " + urls[0]);
         StringBuilder builder = new StringBuilder();
-        HttpClient client = getNewHttpClient();
+        HttpClient client = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet(urls[0]);
 
         try {
